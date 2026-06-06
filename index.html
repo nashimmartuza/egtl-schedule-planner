@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedule Planning | EGTL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Nunito+Sans:wght@300;400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #00A850;
+  --green-deep: #007A3C;
+  --green-light: #BDF9C5;
+  --green-pale: #d5fedb;
+  --navy: #17195F;
+  --navy-mid: #2A2E8A;
+  --navy-light: #3D42B3;
+  --white: #FFFFFF;
+  --gray-50: #F8FAFB;
+  --gray-100: #F0F3F5;
+  --gray-200: #E1E6EA;
+  --gray-400: #9AA3AB;
+  --gray-600: #5A6470;
+  --gray-800: #2D3540;
+  --shadow-sm: 0 1px 3px rgba(23,25,95,0.08);
+  --shadow-md: 0 4px 16px rgba(23,25,95,0.12);
+  --shadow-lg: 0 12px 40px rgba(23,25,95,0.16);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-lg: 16px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-800);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--navy);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(23,25,95,0.35);
+}
+.topbar-brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+.brand-name {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+  color: #fff;
+  line-height: 1.2;
+}
+.brand-address {
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+}
+.topbar-byline {
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--green-light);
+  letter-spacing: 1.2px;
+  border: 1.5px solid var(--green-light);
+  border-radius: 10px;
+  padding: 7px 20px;
+  white-space: nowrap;
+}
+
+/* ── MAIN LAYOUT ── */
+.app-body {
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 24px 28px 48px;
+}
+
+/* ── CONTROL PANEL ── */
+.control-panel {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 22px 28px;
+  margin-bottom: 22px;
+  border: 1px solid var(--gray-200);
+  position: relative;
+  overflow: hidden;
+}
+.control-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green), var(--navy-light));
+}
+.control-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.control-panel-header h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+.step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-pale);
+  color: var(--green-deep);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: 'DM Mono', monospace;
+  border: 1px solid #b0f0c0;
+}
+
+.controls-row {
+  display: flex;
+  gap: 18px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.ctrl-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 180px;
+}
+.ctrl-group.wide { flex: 2; min-width: 250px; }
+
+.ctrl-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ctrl-label .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+select, input[type="date"], input[type="time"] {
+  height: 42px;
+  padding: 0 14px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-800);
+  background: var(--gray-50);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  cursor: pointer;
+}
+select:focus, input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(0,168,80,0.12);
+  background: white;
+}
+select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2317195F' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; }
+
+.btn-generate {
+  height: 42px;
+  padding: 0 28px;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-deep) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 14px rgba(0,168,80,0.35);
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.btn-generate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,168,80,0.45);
+}
+.btn-generate:active { transform: translateY(0); }
+.btn-generate svg { transition: transform 0.3s; }
+.btn-generate:hover svg { transform: rotate(90deg); }
+
+.btn-export {
+  height: 42px;
+  padding: 0 18px;
+  background: white;
+  color: var(--navy);
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; align-items: center; gap: 7px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.btn-export:hover { border-color: var(--navy); background: var(--gray-50); }
+
+.action-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ── ROUTE SUMMARY STRIP ── */
+.route-summary {
+  display: none;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  border-radius: var(--radius);
+  padding: 14px 22px;
+  margin-bottom: 22px;
+  color: white;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-md);
+}
+.route-summary.visible { display: flex; animation: fadeSlideDown 0.4s ease; }
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rs-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.5px;
+}
+.rs-chip {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11.5px;
+  font-family: 'DM Mono', monospace;
+  color: var(--green-light);
+}
+.rs-divider { flex: 1; }
+.rs-stat { text-align: center; }
+.rs-stat-val { font-family: 'Roboto', sans-serif; font-size: 20px; font-weight: 700; color: var(--green-light); }
+.rs-stat-key { font-size: 9px; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+
+/* ── TABLES AREA ── */
+.tables-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.table-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+}
+.table-card-header {
+  padding: 16px 22px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gray-100);
+  background: var(--gray-50);
+}
+.table-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.table-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.badge-green { background: var(--green-pale); color: var(--green-deep); border: 1px solid #b0f0c0; }
+.badge-navy { background: rgba(23,25,95,0.08); color: var(--navy); border: 1px solid rgba(23,25,95,0.15); }
+
+.table-scroll { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+thead th {
+  background: var(--navy);
+  color: white;
+  padding: 10px 9px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: left;
+  white-space: nowrap;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+thead th:first-child { border-radius: 0; width: 80px; text-align: center; }
+thead th:last-child { border-right: none; }
+
+tbody tr {
+  border-bottom: 1px solid var(--gray-100);
+  transition: background 0.15s;
+}
+tbody tr:nth-child(even) { background-color: rgba(23,25,95,0.03); }
+tbody tr:hover { background-color: rgba(23,25,95,0.06); }
+tbody tr:last-child { border-bottom: none; }
+
+td {
+  padding: 8px 9px;
+  font-size: 12.5px;
+  font-family: 'Roboto', sans-serif;
+  color: var(--gray-800);
+  vertical-align: middle;
+}
+td:first-child { text-align: center; }
+
+.route-name {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 13px;
+}
+.fare-b { color: var(--green-deep); font-weight: 700; font-family: 'Roboto', sans-serif; font-size: 13px; }
+.fare-s { color: var(--navy-light); font-weight: 500; font-family: 'Roboto', sans-serif; font-size: 13px; }
+.date-cell { font-size: 12px; color: var(--gray-600); font-family: 'Roboto', sans-serif; white-space: nowrap; }
+.time-cell {
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-800);
+  white-space: nowrap;
+}
+.time-cell.dep { color: var(--green-deep); }
+.time-cell.arr { color: var(--navy); }
+.city-pill {
+  display: inline-block;
+  background: rgba(23,25,95,0.07);
+  color: var(--navy);
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.stop-name { font-family: 'Roboto', sans-serif; font-weight: 500; color: var(--gray-800); font-size: 13px; }
+
+/* ── STATUS BUTTON ── */
+.status-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1.5px solid var(--gray-200);
+  background: white;
+  color: var(--gray-600);
+  white-space: nowrap;
+}
+.status-btn:hover { border-color: var(--green); color: var(--green); }
+.status-btn.done {
+  background: var(--green-pale);
+  border-color: var(--green);
+  color: var(--green-deep);
+}
+.status-btn .dot-ind {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gray-400);
+  transition: background 0.2s;
+}
+.status-btn.done .dot-ind { background: var(--green); }
+
+tr.marked-row {
+  background: var(--green-pale) !important;
+  opacity: 0.88;
+}
+tr.marked-row td { color: var(--green-deep); }
+tr.marked-row .route-name { color: var(--green-deep); }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  padding: 60px 24px;
+  text-align: center;
+  color: var(--gray-400);
+}
+.empty-state-icon { font-size: 40px; margin-bottom: 14px; opacity: 0.5; }
+.empty-state-text { font-size: 14px; font-weight: 600; }
+.empty-state-sub { font-size: 12px; margin-top: 4px; }
+
+/* ── NOTIFICATION ── */
+.toast {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  background: var(--navy);
+  color: white;
+  padding: 14px 22px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0) scale(1); }
+.toast-icon { width: 22px; height: 22px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+
+/* ── SEARCH BAR ── */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  background: white;
+  min-width: 180px;
+  flex: 1;
+  max-width: 260px;
+}
+.search-bar input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 13px;
+  color: var(--gray-800);
+  width: 100%;
+  height: auto;
+  padding: 0;
+  box-shadow: none;
+}
+.search-bar svg { flex-shrink: 0; color: var(--gray-400); }
+
+/* ── FILTER TABS ── */
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.filter-tab {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'DM Mono', monospace;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1.5px solid var(--gray-200);
+  background: white;
+  color: var(--gray-600);
+  letter-spacing: 0.5px;
+}
+.filter-tab.active { background: var(--navy); border-color: var(--navy); color: white; }
+.filter-tab:hover:not(.active) { border-color: var(--navy); color: var(--navy); }
+
+/* ── PRINT ── */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 10mm 8mm 8mm 8mm;
+  }
+
+  .topbar,
+  .control-panel,
+  .toast,
+  .status-btn,
+  .table-card-header .search-bar,
+  .table-card-header .filter-tabs,
+  .table-card-header .table-badge { display: none !important; }
+
+  header, .topbar { position: static !important; height: 0 !important; overflow: hidden !important; }
+
+  .print-header { display: block !important; }
+
+  html, body {
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .app-body {
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .route-summary {
+    display: flex !important;
+    margin-bottom: 8px;
+    padding: 8px 14px;
+    border-radius: 4px;
+    background: #17195F !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .rs-title { font-size: 12px !important; }
+  .rs-stat-val { font-size: 13px !important; }
+  .rs-chip { font-size: 9px !important; padding: 2px 8px !important; }
+  .rs-stat-key { font-size: 7px !important; }
+
+  /* Tables layout */
+  .tables-layout { gap: 8px; }
+
+  .table-card {
+    box-shadow: none !important;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+  .table-card-header { padding: 5px 10px; }
+  .table-card-title { font-size: 9.5px !important; letter-spacing: 0.8px; }
+
+  .table-scroll { overflow: visible !important; }
+  table {
+    min-width: unset !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse;
+  }
+  thead { display: table-header-group; }
+
+  thead th {
+    padding: 5px 4px;
+    font-size: 7.5px;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    background: #17195F !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #routeTable thead th:nth-child(1),
+  #routeTable td:nth-child(1),
+  #stopTable thead th:nth-child(1),
+  #stopTable td:nth-child(1) { display: none !important; }
+
+  #routeTable thead th:nth-child(2) { width: 28%; }
+  #routeTable thead th:nth-child(3) { width: 9%;  }
+  #routeTable thead th:nth-child(4) { width: 9%;  }
+  #routeTable thead th:nth-child(5) { width: 16%; }
+  #routeTable thead th:nth-child(6) { width: 11%; }
+  #routeTable thead th:nth-child(7) { width: 16%; }
+  #routeTable thead th:nth-child(8) { width: 11%; }
+
+  #stopTable thead th:nth-child(2) { width: 40%; }
+  #stopTable thead th:nth-child(3) { width: 22%; }
+  #stopTable thead th:nth-child(4) { width: 18%; }
+  #stopTable thead th:nth-child(5) { width: 20%; }
+
+  td {
+    padding: 3px 4px !important;
+    font-size: 9px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+  }
+  .route-name { font-size: 9px !important; font-weight: 700 !important; }
+  .stop-name  { font-size: 9px !important; }
+  .fare-b, .fare-s { font-size: 9px !important; }
+  .fare-tag   { font-size: 9px !important; }
+  .fare-tag .tk { font-size: 7px !important; }
+  .date-cell  { font-size: 8px !important; }
+  .time-cell  { font-size: 9px !important; }
+  .next-day-tag, .prev-day-tag { font-size: 6.5px !important; padding: 0 2px !important; }
+  .city-pill  { font-size: 7.5px !important; padding: 1px 4px !important; border-radius: 6px !important; }
+
+  tbody tr:nth-child(even) {
+    background: #f5f5f5 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  tr.marked-row {
+    background: #e8fbf0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .app-body { padding: 16px 14px 32px; }
+  .topbar { padding: 0 16px; }
+  .controls-row { gap: 12px; }
+  .ctrl-group { min-width: 140px; }
+  .tables-layout { grid-template-columns: 1fr; }
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
+
+.fare-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+}
+.fare-tag .tk { font-size: 10px; opacity: 0.65; }
+
+.next-day-tag {
+  font-size: 9px;
+  background: #FFF3E0;
+  color: #E65100;
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-family: 'DM Mono', monospace;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.prev-day-tag {
+  font-size: 9px;
+  background: #E8EAF6;
+  color: #3D42B3;
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-family: 'DM Mono', monospace;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/* ── PRINT HEADER ── */
+.print-header {
+  display: none;
+  text-align: center;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #17195F;
+}
+
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-icon">✓</div>
+  <span id="toastMsg">Schedule generated successfully!</span>
+</div>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="brand-name">EVERGREEN TRANSPORT LTD.</div>
+    <div class="brand-address">19, Baitul Aman Masjid Market, Arambag Mor, Motijheel, Dhaka-1000</div>
+  </div>
+  <div class="topbar-byline">BY NASHIM MARTUZA</div>
+</header>
+
+<div class="app-body">
+
+  <!-- PRINT HEADER -->
+  <div class="print-header" id="printHeader">
+    <div style="font-family:'Roboto',sans-serif;font-size:18px;font-weight:700;color:#17195F;letter-spacing:1.5px;">EVERGREEN TRANSPORT LTD.</div>
+    <div style="font-family:'Roboto',sans-serif;font-size:10px;color:#555;margin-top:3px;letter-spacing:0.3px;">19, Baitul Aman Masjid Market, Arambag Mor, Motijheel, Dhaka-1000</div>
+    <div style="font-family:'Roboto',sans-serif;font-size:9px;color:#999;margin-top:2px;">Schedule Planning Sheet &nbsp;·&nbsp; Generated: <span id="printDate"></span></div>
+  </div>
+
+  <!-- CONTROL PANEL -->
+  <div class="control-panel">
+    <div class="control-panel-header">
+      <h2>Schedule Generator</h2>
+      <span class="step-badge">● OPERATIONS</span>
+    </div>
+    <div class="controls-row">
+      <div class="ctrl-group wide">
+        <div class="ctrl-label"><span class="dot"></span>Select Route</div>
+        <select id="routeSelect" onchange="onRouteChange()"></select>
+      </div>
+      <div class="ctrl-group">
+        <div class="ctrl-label"><span class="dot"></span>Departure Date</div>
+        <input type="date" id="depDate">
+      </div>
+      <div class="ctrl-group">
+        <div class="ctrl-label"><span class="dot"></span>Departure Time</div>
+        <input type="time" id="depTime" value="21:00">
+      </div>
+      <div class="action-row">
+        <button class="btn-generate" id="generateBtn" onclick="generateSchedule()">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          Generate
+        </button>
+        <button class="btn-export" onclick="printSchedule()" title="Print / Save as PDF">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          Print
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROUTE SUMMARY STRIP -->
+  <div class="route-summary" id="routeSummary">
+    <div>
+      <div class="rs-title" id="summaryTitle">—</div>
+      <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap">
+        <span class="rs-chip" id="summaryDep">—</span>
+        <span class="rs-chip" id="summaryDate">—</span>
+      </div>
+    </div>
+    <div class="rs-divider"></div>
+    <div class="rs-stat">
+      <div class="rs-stat-val" id="statRoutes">—</div>
+      <div class="rs-stat-key">Routes</div>
+    </div>
+    <div class="rs-stat">
+      <div class="rs-stat-val" id="statStops">—</div>
+      <div class="rs-stat-key">Stops</div>
+    </div>
+    <div class="rs-stat">
+      <div class="rs-stat-val" id="statDuration">—</div>
+      <div class="rs-stat-key">Max Duration</div>
+    </div>
+  </div>
+
+  <!-- TABLES -->
+  <div class="tables-layout">
+
+    <!-- ROUTE TABLE -->
+    <div class="table-card">
+      <div class="table-card-header">
+        <div class="table-card-title">
+          Main Route
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <div class="search-bar">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="routeSearch" placeholder="Search routes…" oninput="filterRouteTable()">
+          </div>
+          <div class="filter-tabs">
+            <div class="filter-tab active" onclick="setRouteFilter('all',this)">All</div>
+            <div class="filter-tab" onclick="setRouteFilter('done',this)">Done</div>
+            <div class="filter-tab" onclick="setRouteFilter('pending',this)">Pending</div>
+          </div>
+          <span class="table-badge badge-green" id="routeCount">0 Routes</span>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table id="routeTable">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Route</th>
+              <th>Business ৳</th>
+              <th>Sleeper ৳</th>
+              <th>Dep. Date</th>
+              <th>Dep. Time</th>
+              <th>Arr. Date</th>
+              <th>Arr. Time</th>
+            </tr>
+          </thead>
+          <tbody id="routeBody">
+            <tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">🗺️</div><div class="empty-state-text">No schedule generated yet</div><div class="empty-state-sub">Select a route and click Generate</div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BOARDING TABLE -->
+    <div class="table-card">
+      <div class="table-card-header">
+        <div class="table-card-title">
+          Boarding Point
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <div class="search-bar">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="stopSearch" placeholder="Search stops or city…" oninput="filterStopTable()">
+          </div>
+          <div class="filter-tabs">
+            <div class="filter-tab active" onclick="setStopFilter('all',this)">All</div>
+            <div class="filter-tab" onclick="setStopFilter('done',this)">Done</div>
+            <div class="filter-tab" onclick="setStopFilter('pending',this)">Pending</div>
+          </div>
+          <span class="table-badge badge-navy" id="stopCount">0 B. Point</span>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table id="stopTable">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Boarding Point</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>City</th>
+            </tr>
+          </thead>
+          <tbody id="boardingBody">
+            <tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">📌</div><div class="empty-state-text">No boarding schedule generated yet</div><div class="empty-state-sub">Select a route and click Generate</div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const routeDatabase = {
+  "DHK_COX": {
+    title: "DHAKA (ABDULLAHPUR) → COX'S BAZAR",
+    routes: [
+      { n: "Dhaka - Cox's Bazar", b: "1400", s: "1600", dM: 0, aM: 575 },
+      { n: "Dhaka - Chittagong", b: "1000", s: "1200", dM: 0, aM: 335 },
+      { n: "Dhaka - Keranihat", b: "1200", s: "1400", dM: 0, aM: 485 },
+      { n: "Dhaka - Chakaria", b: "1300", s: "1500", dM: 0, aM: 545 },
+      { n: "Chittagong - Cox's Bazar", b: "700", s: "1000", dM: 350, aM: 575 }
+    ],
+    stops: [
+      { n: "Abdullahpur", m: -115, c: "Dhaka" },
+      { n: "Azampur Bus Point", m: -105, c: "Dhaka" },
+      { n: "Airport Bus Point", m: -90, c: "Dhaka" },
+      { n: "Khilkhet", m: -85, c: "Dhaka" },
+      { n: "Kuril Bishwa Road", m: -75, c: "Dhaka" },
+      { n: "Norda", m: -70, c: "Dhaka" },
+      { n: "Badda", m: -60, c: "Dhaka" },
+      { n: "Rampura", m: -40, c: "Dhaka" },
+      { n: "Fakirapul", m: -25, c: "Dhaka" },
+      { n: "Arambag Bus Point", m: 0, c: "Dhaka" },
+      { n: "Sonir Akhra", m: 10, c: "Dhaka" },
+      { n: "Sign Board", m: 20, c: "Dhaka" },
+      { n: "Chittagong Road", m: 30, c: "Dhaka" }
+    ]
+  },
+  "DHK_GAB_COX": {
+    title: "DHAKA (GABTOLI) → COX'S BAZAR",
+    routes: [
+      { n: "Dhaka - Cox's Bazar", b: "1400", s: "1600", dM: 0, aM: 575 },
+      { n: "Dhaka - Chittagong", b: "1000", s: "1200", dM: 0, aM: 335 },
+      { n: "Dhaka - Keranihat", b: "1200", s: "1400", dM: 0, aM: 485 },
+      { n: "Dhaka - Chakaria", b: "1300", s: "1500", dM: 0, aM: 545 },
+      { n: "Chittagong - Cox's Bazar", b: "700", s: "1000", dM: 350, aM: 575 }
+    ],
+    stops: [
+      { n: "GABTOLI", m: -55, c: "Dhaka" },
+      { n: "Kallyanpur Bus Point", m: -40, c: "Dhaka" },
+      { n: "PANTHAPATH", m: -25, c: "Dhaka" },
+      { n: "Fakirapul", m: -15, c: "Dhaka" },
+      { n: "ARAMBAGH", m: 0, c: "Dhaka" },
+      { n: "Sonir Akhra", m: 10, c: "Dhaka" },
+      { n: "Sign Board", m: 20, c: "Dhaka" },
+      { n: "Chittagong Road", m: 30, c: "Dhaka" }
+    ]
+  },
+  "DHK_CHP_MAIN": {
+    title: "DHAKA → CHAPAI NAWABGANJ",
+    routes: [
+      { n: "Dhaka - Chapai Nawabganj", b: "1200", s: "1400", dM: 0, aM: 420 },
+      { n: "Dhaka - Rajshahi", b: "1100", s: "1300", dM: 0, aM: 360 },
+      { n: "Dhaka - Natore", b: "1000", s: "1200", dM: 0, aM: 300 }
+    ],
+    stops: [
+      { n: "Kallyanpur Khaza Market", m: 0, c: "Dhaka" },
+      { n: "GABTOLI", m: 15, c: "Dhaka" },
+      { n: "Savar Bus Point", m: 40, c: "Dhaka" },
+      { n: "NABINAGAR", m: 60, c: "Dhaka" },
+      { n: "Baipail Bus point", m: 75, c: "Dhaka" },
+      { n: "Chandra Bus Point", m: 90, c: "Dhaka" }
+    ]
+  },
+  "COX_DHK": {
+    title: "COX'S BAZAR → DHAKA",
+    routes: [
+      { n: "Cox's Bazar - Dhaka", b: "1400", s: "1600", dM: 0, aM: 570 },
+      { n: "Cox's Bazar - Chittagong", b: "700", s: "1000", dM: 0, aM: 240 },
+      { n: "Chakaria - Dhaka", b: "1300", s: "1500", dM: 40, aM: 570 },
+      { n: "Keranihat - Dhaka", b: "1200", s: "1400", dM: 90, aM: 570 },
+      { n: "Chittagong - Dhaka", b: "1000", s: "1200", dM: 255, aM: 570 }
+    ],
+    stops: [
+      { n: "Cox Terminal AC Counter", m: 0, c: "Cox's Bazar" },
+      { n: "Link Road", m: 10, c: "Cox's Bazar" },
+      { n: "Ramu", m: 20, c: "Cox's Bazar" },
+      { n: "Joarianala", m: 25, c: "Cox's Bazar" },
+      { n: "Edgao Bus Point", m: 30, c: "Cox's Bazar" },
+      { n: "Chakaria Bus Point", m: 45, c: "Chakaria" },
+      { n: "Keranihat Bus Point", m: 90, c: "Keranihat" },
+      { n: "Amirabad Bus Point", m: 80, c: "Keranihat" },
+      { n: "Gasbaria Bus point", m: 120, c: "Keranihat" },
+      { n: "Aziz Nagar_bus point", m: 60, c: "Keranihat" },
+      { n: "Patiya_bus point", m: 135, c: "Keranihat" },
+      { n: "DAMPARA", m: 255, c: "Chittagong" },
+      { n: "A.K KHAN", m: 285, c: "Chittagong" },
+      { n: "Vatiari Bus Point", m: 315, c: "Chittagong" },
+      { n: "Sitakunda Bus Point", m: 325, c: "Chittagong" },
+      { n: "kumira Bus Point", m: 340, c: "Chittagong" },
+      { n: "Bariarhat Bus Point", m: 355, c: "Chittagong" },
+      { n: "Feni Bus Point", m: 385, c: "Feni" }
+    ]
+  },
+  "COX_CHP_MAIN": {
+    title: "COX'S BAZAR → CHAPAI NAWABGANJ",
+    routes: [
+      { n: "Cox's Bazar - Chapai Nawabganj", b: "2400", s: "2800", dM: 0, aM: 1170 },
+      { n: "Cox's Bazar - Chittagong", b: "600", s: "800", dM: 0, aM: 345 },
+      { n: "Cox's Bazar - Dhaka", b: "1400", s: "1600", dM: 0, aM: 705 },
+      { n: "Cox's Bazar - Chandra", b: "1800", s: "2200", dM: 0, aM: 810 },
+      { n: "Cox's Bazar - Tangail", b: "2000", s: "2400", dM: 0, aM: 840 },
+      { n: "Cox's Bazar - Sirajganj", b: "2000", s: "2400", dM: 0, aM: 960 },
+      { n: "Cox's Bazar - Natore", b: "2200", s: "2600", dM: 0, aM: 1050 },
+      { n: "Cox's Bazar - Rajshahi", b: "2300", s: "2700", dM: 0, aM: 1110 },
+      { n: "Keranihat - Dhaka", b: "1200", s: "1600", dM: 150, aM: 705 },
+      { n: "Keranihat - Sirajganj", b: "2100", s: "2500", dM: 150, aM: 960 },
+      { n: "Keranihat - Natore", b: "2100", s: "2500", dM: 150, aM: 1050 },
+      { n: "Keranihat - Rajshahi", b: "2200", s: "2600", dM: 150, aM: 1110 },
+      { n: "Keranihat - Chapai Nawabganj", b: "2300", s: "2700", dM: 150, aM: 1170 },
+      { n: "Chittagong - Dhaka", b: "900", s: "1200", dM: 360, aM: 705 },
+      { n: "Chittagong - Chandra", b: "1600", s: "2300", dM: 360, aM: 810 },
+      { n: "Chittagong - Tangail", b: "1600", s: "2300", dM: 360, aM: 840 },
+      { n: "Chittagong - Sirajganj", b: "1600", s: "2300", dM: 360, aM: 960 },
+      { n: "Chittagong - Natore", b: "1600", s: "2300", dM: 360, aM: 1050 },
+      { n: "Chittagong - Rajshahi", b: "1700", s: "2400", dM: 360, aM: 1110 },
+      { n: "Chittagong - Chapai Nawabganj", b: "1800", s: "2500", dM: 360, aM: 1170 },
+      { n: "Cumilla - Chapai Nawabganj", b: "1700", s: "2200", dM: 505, aM: 1170 },
+      { n: "Dhaka - Natore", b: "1000", s: "1200", dM: 720, aM: 1050 },
+      { n: "Dhaka - Rajshahi", b: "1100", s: "1300", dM: 720, aM: 1110 },
+      { n: "Dhaka - Chapai Nawabganj", b: "1200", s: "1400", dM: 720, aM: 1170 }
+    ],
+    stops: [
+      { n: "Cox Terminal AC Counter", m: 0, c: "Cox's Bazar" },
+      { n: "Link Road", m: 10, c: "Cox's Bazar" },
+      { n: "Ramu", m: 25, c: "Cox's Bazar" },
+      { n: "Joarianala", m: 30, c: "Cox's Bazar" },
+      { n: "Edgao Bus Point", m: 45, c: "Cox's Bazar" },
+      { n: "Chakaria Bus Point", m: 90, c: "Chakaria" },
+      { n: "Keranihat Bus Point", m: 150, c: "Keranihat" },
+      { n: "Amirabad Bus Point", m: 140, c: "Keranihat" },
+      { n: "Gasbaria Bus point", m: 180, c: "Keranihat" },
+      { n: "Aziz Nagar_bus point", m: 120, c: "Keranihat" },
+      { n: "Patiya_bus point", m: 195, c: "Keranihat" },
+      { n: "DAMPARA", m: 360, c: "Chittagong" },
+      { n: "A.K KHAN", m: 390, c: "Chittagong" },
+      { n: "Vatiari Bus Point", m: 410, c: "Chittagong" },
+      { n: "Sitakunda Bus Point", m: 420, c: "Chittagong" },
+      { n: "kumira Bus Point", m: 435, c: "Chittagong" },
+      { n: "Bariarhat Bus Point", m: 450, c: "Chittagong" },
+      { n: "Feni Bus Point", m: 480, c: "Feni" },
+      { n: "Comilla Bus Point", m: 505, c: "Comilla" },
+      { n: "ARAMBAGH", m: 720, c: "Dhaka" },
+      { n: "Panthapath", m: 730, c: "Dhaka" },
+      { n: "Kallyanpur Bus Point", m: 735, c: "Dhaka" }
+    ]
+  },
+  "COX_DEB_MAIN": {
+    title: "COX'S BAZAR → DEBIGANJ",
+    routes: [
+      { n: "Cox's Bazar - Debiganj", b: "-", s: "-", dM: 0, aM: 1155 },
+      { n: "Cox's Bazar - Saidpur", b: "2300", s: "2700", dM: 0, aM: 1155 },
+      { n: "Cox's Bazar - Dhaka", b: "1400", s: "1600", dM: 0, aM: 1290 },
+      { n: "Cox's Bazar - Rangpur", b: "2200", s: "2600", dM: 0, aM: 1095 },
+      { n: "Cox's Bazar - Bogura", b: "2000", s: "2400", dM: 0, aM: 975 },
+      { n: "Cox's Bazar - Tangail", b: "1800", s: "2200", dM: 0, aM: 840 },
+      { n: "Cox's Bazar - Chittagong", b: "600", s: "800", dM: 0, aM: 315 },
+      { n: "Cox's Bazar - Palashbari", b: "2100", s: "2500", dM: 0, aM: 1035 },
+      { n: "Cox's Bazar - Sirajganj", b: "1900", s: "2200", dM: 0, aM: 885 },
+      { n: "Keranihat - Rangpur", b: "2100", s: "2500", dM: 150, aM: 1095 },
+      { n: "Keranihat - Saidpur", b: "2200", s: "2600", dM: 150, aM: 1155 },
+      { n: "Keranihat - Bogura", b: "1900", s: "2300", dM: 150, aM: 975 },
+      { n: "Keranihat - Palashbari", b: "2000", s: "2400", dM: 150, aM: 1035 },
+      { n: "Chittagong - Dhaka", b: "900", s: "1200", dM: 345, aM: 1410 },
+      { n: "Chittagong - Rangpur", b: "2000", s: "2300", dM: 345, aM: 1095 },
+      { n: "Chittagong - Saidpur", b: "2100", s: "2400", dM: 345, aM: 1155 },
+      { n: "Chittagong - Bogura", b: "1900", s: "2200", dM: 345, aM: 975 },
+      { n: "Chittagong - Tangail", b: "1400", s: "2100", dM: 345, aM: 840 },
+      { n: "Chittagong - Palashbari", b: "2000", s: "2300", dM: 345, aM: 1035 },
+      { n: "Chittagong - Sirajganj", b: "1400", s: "2100", dM: 345, aM: 885 },
+      { n: "Feni - Rangpur", b: "1900", s: "2300", dM: 480, aM: 1095 },
+      { n: "Feni - Bogura", b: "1700", s: "2100", dM: 480, aM: 975 },
+      { n: "Feni - Palashbari", b: "1800", s: "2200", dM: 480, aM: 1035 },
+      { n: "Cumilla - Rangpur", b: "1800", s: "2200", dM: 510, aM: 1095 },
+      { n: "Cumilla - Saidpur", b: "1900", s: "2300", dM: 510, aM: 1155 },
+      { n: "Dhaka - Rangpur", b: "1100", s: "1400", dM: 585, aM: 1095 },
+      { n: "Dhaka - Saidpur", b: "1200", s: "1500", dM: 585, aM: 1155 },
+      { n: "Dhaka - Bogura", b: "1000", s: "1300", dM: 585, aM: 975 },
+      { n: "Dhaka - Palashbari", b: "1100", s: "1400", dM: 585, aM: 1035 }
+    ],
+    stops: [
+      { n: "Cox Terminal AC Counter", m: 0, c: "Cox's Bazar" },
+      { n: "Link Road", m: 10, c: "Cox's Bazar" },
+      { n: "Ramu", m: 30, c: "Cox's Bazar" },
+      { n: "Joarianala", m: 35, c: "Cox's Bazar" },
+      { n: "Edgao Bus Point", m: 60, c: "Cox's Bazar" },
+      { n: "Chakaria Bus Point", m: 90, c: "Chakaria" },
+      { n: "Keranihat Bus Point", m: 150, c: "Keranihat" },
+      { n: "Amirabad Bus Point--", m: 140, c: "Keranihat" },
+      { n: "Gasbaria Bus point.", m: 180, c: "Keranihat" },
+      { n: "Aziz Nagar_bus point.", m: 120, c: "Keranihat" },
+      { n: "Patiya_bus point.", m: 195, c: "Keranihat" },
+      { n: "DAMPARA", m: 345, c: "Chittagong" },
+      { n: "A.K KHAN", m: 375, c: "Chittagong" },
+      { n: "Vatiari Bus Point", m: 395, c: "Chittagong" },
+      { n: "Sitakunda Bus Point", m: 405, c: "Chittagong" },
+      { n: "kumira Bus Point", m: 420, c: "Chittagong" },
+      { n: "Bariarhat Bus Point", m: 435, c: "Chittagong" },
+      { n: "Feni Bus Point", m: 480, c: "Feni" },
+      { n: "Comilla Bus Point", m: 510, c: "Comilla" },
+      { n: "ARAMBAGH", m: 585, c: "Dhaka" },
+      { n: "Kallyanpur Bus Point", m: 600, c: "Dhaka" }
+    ]
+  },
+  "CHP_DHK_NIGHT": {
+    title: "CHAPAI NAWABGANJ → DHAKA",
+    routes: [
+      { n: "Chapai Nawabganj - Dhaka", b: "1400", s: "1400", dM: 0, aM: 420 },
+      { n: "Rajshahi - Dhaka", b: "1300", s: "1300", dM: 90, aM: 420 },
+      { n: "Natore - Dhaka", b: "1200", s: "1200", dM: 150, aM: 420 }
+    ],
+    stops: [
+      { n: "Chapai Nawabganj Bus Point", m: 0, c: "Chapai" },
+      { n: "Baliaghata Bus Point", m: 10, c: "Chapai" },
+      { n: "Switch Gate", m: 15, c: "Chapai" },
+      { n: "Kamarpara Counter", m: 15, c: "Chapai" },
+      { n: "Sultangonj Bus Point", m: 20, c: "Chapai" },
+      { n: "Godagari Bus Point", m: 30, c: "Chapai" },
+      { n: "Mohisalbari Bus Point", m: 40, c: "Chapai" },
+      { n: "Railgate Bus Point", m: 45, c: "Chapai" },
+      { n: "Shirul Bus Point", m: 90, c: "Rajshahi" },
+      { n: "Kazla Bus Point", m: 100, c: "Rajshahi" },
+      { n: "Binodpur", m: 105, c: "Rajshahi" },
+      { n: "BIHAS Mor Bus Point", m: 110, c: "Rajshahi" },
+      { n: "Katakhali Bus Station", m: 115, c: "Rajshahi" },
+      { n: "Banessor Bus Point", m: 130, c: "Rajshahi" },
+      { n: "Rajabari (Rajshahi) Bus Point", m: 55, c: "Rajshahi" },
+      { n: "Natore Bus Point", m: 150, c: "Natore" },
+      { n: "Hoybotpur Bus Point", m: 155, c: "Natore" },
+      { n: "Ahmedpur Bus Point", m: 160, c: "Natore" },
+      { n: "Bonpara Bus Point.", m: 170, c: "Natore" },
+      { n: "Baraigram Bus Point.", m: 180, c: "Natore" },
+      { n: "Razzak More", m: 185, c: "Natore" },
+      { n: "Noya Bazar Bus Point.", m: 195, c: "Natore" },
+      { n: "Kachikata", m: 200, c: "Natore" },
+      { n: "Mohishluti Bus Point", m: 210, c: "Natore" },
+      { n: "Puthia Bus Point", m: 120, c: "Natore" },
+      { n: "Jhalmalia Bus Point", m: 135, c: "Natore" }
+    ]
+  },
+  "CHP_COX_MAIN": {
+    title: "CHAPAI NAWABGANJ → COX'S BAZAR",
+    routes: [
+      { n: "Chapai Nawabganj - Cox's Bazar", b: "2400", s: "2800", dM: 0, aM: 1110 },
+      { n: "Chapai Nawabganj - Dhaka", b: "1200", s: "1400", dM: 0, aM: 510 },
+      { n: "Chapai Nawabganj - Cumilla", b: "1600", s: "2200", dM: 0, aM: 660 },
+      { n: "Chapai Nawabganj - Chittagong", b: "1800", s: "2500", dM: 0, aM: 840 },
+      { n: "Chapai Nawabganj - Keranihat", b: "2300", s: "2700", dM: 0, aM: 990 },
+      { n: "Rajshahi - Dhaka", b: "1100", s: "1300", dM: 105, aM: 510 },
+      { n: "Rajshahi - Cumilla", b: "1500", s: "2100", dM: 105, aM: 660 },
+      { n: "Rajshahi - Chittagong", b: "1700", s: "2400", dM: 105, aM: 840 },
+      { n: "Rajshahi - Keranihat", b: "2200", s: "2600", dM: 105, aM: 990 },
+      { n: "Rajshahi - Cox's Bazar", b: "2300", s: "2700", dM: 105, aM: 1110 },
+      { n: "Natore - Dhaka", b: "1000", s: "1200", dM: 195, aM: 510 },
+      { n: "Natore - Cumilla", b: "1400", s: "2000", dM: 195, aM: 660 },
+      { n: "Natore - Chittagong", b: "1600", s: "2300", dM: 195, aM: 840 },
+      { n: "Natore - Keranihat", b: "2100", s: "2500", dM: 195, aM: 990 },
+      { n: "Natore - Cox's Bazar", b: "2200", s: "2600", dM: 195, aM: 1110 },
+      { n: "Sirajganj - Dhaka", b: "800", s: "1000", dM: 285, aM: 510 },
+      { n: "Sirajganj - Chittagong", b: "1600", s: "2300", dM: 285, aM: 840 },
+      { n: "Sirajganj - Keranihat", b: "2000", s: "2300", dM: 285, aM: 990 },
+      { n: "Sirajganj - Cox's Bazar", b: "2100", s: "2400", dM: 285, aM: 1110 },
+      { n: "Dhaka - Chittagong", b: "900", s: "1200", dM: 505, aM: 840 },
+      { n: "Dhaka - Keranihat", b: "1200", s: "1600", dM: 505, aM: 990 },
+      { n: "Dhaka - Cox's Bazar", b: "1400", s: "1600", dM: 505, aM: 1110 }
+    ],
+    stops: [
+      { n: "Chapai Nawabganj Bus Point", m: 0, c: "Chapai" },
+      { n: "Baliaghata Bus Point", m: 10, c: "Chapai" },
+      { n: "Switch Gate", m: 15, c: "Chapai" },
+      { n: "Kamarpara Counter", m: 15, c: "Chapai" },
+      { n: "Sultangonj Bus Point", m: 20, c: "Chapai" },
+      { n: "Godagari Bus Point", m: 30, c: "Chapai" },
+      { n: "Mohisalbari Bus Point", m: 40, c: "Chapai" },
+      { n: "Railgate Bus Point", m: 45, c: "Chapai" },
+      { n: "Shirul Bus Point", m: 105, c: "Rajshahi" },
+      { n: "Kazla Bus Point", m: 115, c: "Rajshahi" },
+      { n: "Binodpur", m: 120, c: "Rajshahi" },
+      { n: "BIHAS Mor Bus Point", m: 125, c: "Rajshahi" },
+      { n: "Katakhali Bus Station", m: 130, c: "Rajshahi" },
+      { n: "Banessor Bus Point", m: 145, c: "Rajshahi" },
+      { n: "Rajabari (Rajshahi) Bus Point", m: 55, c: "Rajshahi" },
+      { n: "Natore Bus Point", m: 195, c: "Natore" },
+      { n: "Hoybotpur Bus Point", m: 200, c: "Natore" },
+      { n: "Ahmedpur Bus Point", m: 205, c: "Natore" },
+      { n: "Bonpara Bus Point.", m: 215, c: "Natore" },
+      { n: "Baraigram Bus Point.", m: 225, c: "Natore" },
+      { n: "Razzak More", m: 230, c: "Natore" },
+      { n: "Noya Bazar Bus Point.", m: 240, c: "Natore" },
+      { n: "Kachikata", m: 245, c: "Natore" },
+      { n: "Mohishluti Bus Point", m: 255, c: "Natore" },
+      { n: "Puthia Bus Point", m: 165, c: "Natore" },
+      { n: "Jhalmalia Bus Point", m: 180, c: "Natore" },
+      { n: "Sirajganj Bus Point", m: 285, c: "Sirajganj" },
+      { n: "Kallyanpur Bus Point", m: 505, c: "Dhaka" },
+      { n: "ARAMBAGH", m: 515, c: "Dhaka" }
+    ]
+  },
+  "DEB_COX_MAIN": {
+    title: "DEBIGANJ → COX'S BAZAR",
+    routes: [
+      { n: "Debiganj - Cox's Bazar", b: "-", s: "-", dM: 0, aM: 1095 },
+      { n: "Saidpur - Dhaka", b: "1200", s: "1500", dM: 0, aM: 495 },
+      { n: "Saidpur - Chittagong", b: "2100", s: "2400", dM: 0, aM: 855 },
+      { n: "Saidpur - Cox's Bazar", b: "2300", s: "2700", dM: 0, aM: 1095 },
+      { n: "Saidpur - Keranihat", b: "2200", s: "2600", dM: 0, aM: 1020 },
+      { n: "Saidpur - Cumilla", b: "1900", s: "2300", dM: 0, aM: 675 },
+      { n: "Rangpur - Dhaka", b: "1100", s: "1400", dM: 60, aM: 495 },
+      { n: "Rangpur - Chittagong", b: "2000", s: "2300", dM: 60, aM: 855 },
+      { n: "Rangpur - Cox's Bazar", b: "2200", s: "2600", dM: 60, aM: 1095 },
+      { n: "Rangpur - Keranihat", b: "2100", s: "2500", dM: 60, aM: 1020 },
+      { n: "Rangpur - Cumilla", b: "1800", s: "2200", dM: 60, aM: 675 },
+      { n: "Palashbari - Dhaka", b: "1100", s: "1400", dM: 105, aM: 525 },
+      { n: "Palashbari - Chittagong", b: "2000", s: "2300", dM: 105, aM: 855 },
+      { n: "Palashbari - Cox's Bazar", b: "2200", s: "2600", dM: 105, aM: 1095 },
+      { n: "Palashbari - Keranihat", b: "2100", s: "2500", dM: 105, aM: 1020 },
+      { n: "Bogura - Dhaka", b: "1000", s: "1300", dM: 165, aM: 525 },
+      { n: "Bogura - Chittagong", b: "1900", s: "2200", dM: 165, aM: 855 },
+      { n: "Bogura - Cox's Bazar", b: "2100", s: "2500", dM: 165, aM: 1095 },
+      { n: "Bogura - Keranihat", b: "2000", s: "2400", dM: 165, aM: 1020 },
+      { n: "Sirajganj - Chittagong", b: "1400", s: "2100", dM: 270, aM: 855 },
+      { n: "Sirajganj - Cox's Bazar", b: "1900", s: "2200", dM: 270, aM: 1095 },
+      { n: "Dhaka - Chittagong", b: "900", s: "1200", dM: 550, aM: 855 },
+      { n: "Dhaka - Cox's Bazar", b: "1200", s: "1600", dM: 550, aM: 1095 }
+    ],
+    stops: [
+      { n: "Saidpur Bus Point", m: 0, c: "Saidpur" },
+      { n: "Taraganj.", m: 20, c: "Saidpur" },
+      { n: "Kamarpara Bus Point", m: 60, c: "Rangpur" },
+      { n: "Modern More Bus Point", m: 65, c: "Rangpur" },
+      { n: "Boiragiganj Bus Point", m: 70, c: "Rangpur" },
+      { n: "Boldipukur Bus Point", m: 75, c: "Rangpur" },
+      { n: "Jaigirhat", m: 80, c: "Rangpur" },
+      { n: "Mithapukur Bus Point", m: 85, c: "Rangpur" },
+      { n: "Shathibari Bus Point", m: 90, c: "Rangpur" },
+      { n: "Boro Dorga Bus Point", m: 95, c: "Rangpur" },
+      { n: "Laldighi Bus point_", m: 105, c: "Rangpur" },
+      { n: "Pirganj", m: 110, c: "Rangpur" },
+      { n: "Dhaperhat Bus_Point", m: 105, c: "Palashbari" },
+      { n: "Palashbari Bus Point", m: 115, c: "Palashbari" },
+      { n: "Komorpur Bus Point", m: 125, c: "Palashbari" },
+      { n: "Gobindaganj Bus_Point", m: 140, c: "Palashbari" },
+      { n: "Mokamtola", m: 165, c: "Bogura" },
+      { n: "Mahasthangarh Bus_Point", m: 170, c: "Bogura" },
+      { n: "Matidali More Bus Point", m: 180, c: "Bogura" },
+      { n: "Bogura _4 Matha Counter", m: 185, c: "Bogura" },
+      { n: "Banani Bus Point", m: 190, c: "Bogura" },
+      { n: "B - Block Bus point", m: 200, c: "Bogura" },
+      { n: "Sherpur Bus Point", m: 215, c: "Bogura" },
+      { n: "Candaikona Bus Point", m: 230, c: "Bogura" },
+      { n: "Sirajganj Bus Point", m: 270, c: "Sirajganj" },
+      { n: "KALLYANPUR", m: 540, c: "Dhaka" },
+      { n: "Panthapath Bus Point", m: 550, c: "Dhaka" },
+      { n: "Arambag Bus Point", m: 570, c: "Dhaka" }
+    ]
+  }
+};
+
+const Scheduler = (() => {
+
+  function addMinutes(date, minutes) {
+    return new Date(date.getTime() + minutes * 60000);
+  }
+
+  function formatTime(date) {
+    return date.toLocaleTimeString('en-US', {
+      hour: '2-digit', minute: '2-digit', hour12: true
+    });
+  }
+
+  function formatDate(date) {
+    return date.toLocaleDateString('en-GB', {
+      day: '2-digit', month: 'short', year: 'numeric'
+    });
+  }
+
+  function formatDateKey(date) {
+    return date.toISOString().split('T')[0];
+  }
+
+  function calcDeparture(baseDate, route) {
+    return addMinutes(baseDate, route.dM);
+  }
+
+  function calcArrival(baseDate, route) {
+    return addMinutes(baseDate, route.aM);
+  }
+
+  function calcBoarding(baseDate, stop) {
+    return addMinutes(baseDate, stop.m);
+  }
+
+  function getDayDiff(baseDate, targetDate) {
+    const baseMidnight = new Date(baseDate);
+    baseMidnight.setHours(0,0,0,0);
+    const targetMidnight = new Date(targetDate);
+    targetMidnight.setHours(0,0,0,0);
+    return Math.round((targetMidnight - baseMidnight) / 86400000);
+  }
+
+  /** Format duration from minutes */
+  function formatDuration(minutes) {
+    const h = Math.floor(Math.abs(minutes) / 60);
+    const m = Math.abs(minutes) % 60;
+    return `${h}h${m > 0 ? ' ' + m + 'm' : ''}`;
+  }
+
+  function generateRouteSchedule(routeKey, baseDate) {
+    const data = routeDatabase[routeKey];
+    if (!data) return [];
+    return data.routes.map(r => {
+      const dep = calcDeparture(baseDate, r);
+      const arr = calcArrival(baseDate, r);
+      return { ...r, dep, arr, depDiff: getDayDiff(baseDate, dep), arrDiff: getDayDiff(baseDate, arr) };
+    });
+  }
+
+  function generateStopSchedule(routeKey, baseDate) {
+    const data = routeDatabase[routeKey];
+    if (!data) return [];
+    return data.stops.map(s => {
+      const t = calcBoarding(baseDate, s);
+      return { ...s, time: t, dayDiff: getDayDiff(baseDate, t) };
+    });
+  }
+
+  return { addMinutes, formatTime, formatDate, formatDateKey, calcDeparture, calcArrival, calcBoarding, getDayDiff, formatDuration, generateRouteSchedule, generateStopSchedule };
+})();
+
+let currentRouteFilter = 'all';
+let currentStopFilter = 'all';
+
+const UI = (() => {
+
+  function initDropdown() {
+    const select = document.getElementById('routeSelect');
+    select.innerHTML = '';
+    for (const key in routeDatabase) {
+      const opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = routeDatabase[key].title;
+      select.appendChild(opt);
+    }
+  }
+
+  function showToast(msg, duration = 3000) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), duration);
+  }
+
+  function dayTag(diff) {
+    if (diff === 0) return '';
+    if (diff > 0) return `<span class="next-day-tag">+${diff}D</span>`;
+    return `<span class="prev-day-tag">${diff}D</span>`;
+  }
+
+  function statusBtn() {
+    return `<button class="status-btn" onclick="toggleRow(this)"><span class="dot-ind"></span>DONE</button>`;
+  }
+
+  function renderRouteTable(scheduleRows) {
+    const tbody = document.getElementById('routeBody');
+    if (!scheduleRows.length) {
+      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">🗺️</div><div class="empty-state-text">No routes found</div></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = scheduleRows.map((r, i) => {
+      const bFare = r.b === '-' ? '<span style="color:#aaa">—</span>' : `<span class="fare-tag fare-b"><span class="tk">৳</span>${r.b}</span>`;
+      const sFare = r.s === '-' ? '<span style="color:#aaa">—</span>' : `<span class="fare-tag fare-s"><span class="tk">৳</span>${r.s}</span>`;
+      return `<tr data-index="${i}" data-route="${r.n.toLowerCase()}">
+        <td>${statusBtn()}</td>
+        <td><span class="route-name">${r.n}</span></td>
+        <td>${bFare}</td>
+        <td>${sFare}</td>
+        <td><span class="date-cell">${Scheduler.formatDate(r.dep)}${dayTag(r.depDiff)}</span></td>
+        <td><span class="time-cell dep">${Scheduler.formatTime(r.dep)}</span></td>
+        <td><span class="date-cell">${Scheduler.formatDate(r.arr)}${dayTag(r.arrDiff)}</span></td>
+        <td><span class="time-cell arr">${Scheduler.formatTime(r.arr)}</span></td>
+      </tr>`;
+    }).join('');
+    updateRouteCount();
+  }
+
+  function renderStopTable(stopRows) {
+    const tbody = document.getElementById('boardingBody');
+    if (!stopRows.length) {
+      tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">📌</div><div class="empty-state-text">No stops found</div></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = stopRows.map((s, i) => `<tr data-index="${i}" data-stop="${s.n.toLowerCase()}" data-city="${s.c.toLowerCase()}">
+      <td>${statusBtn()}</td>
+      <td><span class="stop-name">${s.n}</span></td>
+      <td><span class="date-cell">${Scheduler.formatDate(s.time)}${dayTag(s.dayDiff)}</span></td>
+      <td><span class="time-cell">${Scheduler.formatTime(s.time)}</span></td>
+      <td><span class="city-pill">${s.c}</span></td>
+    </tr>`).join('');
+    updateStopCount();
+  }
+
+  function updateSummary(routeKey, baseDate, routeData, stopData) {
+    const data = routeDatabase[routeKey];
+    const maxArrM = Math.max(...data.routes.map(r => r.aM));
+    document.getElementById('summaryTitle').textContent = data.title;
+    document.getElementById('summaryDep').textContent = `DEP: ${Scheduler.formatTime(baseDate)} · ${Scheduler.formatDate(baseDate)}`;
+    document.getElementById('summaryDate').textContent = routeKey;
+    document.getElementById('statRoutes').textContent = data.routes.length;
+    document.getElementById('statStops').textContent = data.stops.length;
+    document.getElementById('statDuration').textContent = Scheduler.formatDuration(maxArrM);
+    document.getElementById('routeSummary').classList.add('visible');
+  }
+
+  function updateRouteCount() {
+    const rows = document.querySelectorAll('#routeBody tr[data-index]');
+    const visible = Array.from(rows).filter(r => r.style.display !== 'none').length;
+    document.getElementById('routeCount').textContent = `${visible} Routes`;
+  }
+
+  function updateStopCount() {
+    const rows = document.querySelectorAll('#boardingBody tr[data-index]');
+    const visible = Array.from(rows).filter(r => r.style.display !== 'none').length;
+    document.getElementById('stopCount').textContent = `${visible} B. Point`;
+  }
+
+  return { initDropdown, showToast, renderRouteTable, renderStopTable, updateSummary, updateRouteCount, updateStopCount };
+})();
+
+function toggleRow(btn) {
+  const row = btn.closest('tr');
+  const isDone = row.classList.toggle('marked-row');
+  btn.classList.toggle('done', isDone);
+  btn.innerHTML = `<span class="dot-ind"></span>${isDone ? 'UNDO' : 'DONE'}`;
+}
+
+function onRouteChange() {
+  const dateVal = document.getElementById('depDate').value;
+  const timeVal = document.getElementById('depTime').value;
+  if (dateVal && timeVal) generateSchedule();
+}
+
+function generateSchedule() {
+  const routeKey = document.getElementById('routeSelect').value;
+  const dateVal = document.getElementById('depDate').value;
+  const timeVal = document.getElementById('depTime').value;
+  if (!dateVal || !timeVal) {
+    UI.showToast('⚠ Please select date and time first');
+    return;
+  }
+
+  const baseDate = new Date(dateVal + 'T' + timeVal);
+
+  const routeSchedule = Scheduler.generateRouteSchedule(routeKey, baseDate);
+  const stopSchedule = Scheduler.generateStopSchedule(routeKey, baseDate);
+
+  UI.renderRouteTable(routeSchedule);
+  UI.renderStopTable(stopSchedule);
+  UI.updateSummary(routeKey, baseDate, routeSchedule, stopSchedule);
+
+  // Reset filters
+  document.getElementById('routeSearch').value = '';
+  document.getElementById('stopSearch').value = '';
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.filter-tab:first-child').forEach(t => t.classList.add('active'));
+  currentRouteFilter = 'all';
+  currentStopFilter = 'all';
+
+  document.getElementById('printDate').textContent = new Date().toLocaleString();
+  UI.showToast(`✓ Schedule generated — ${routeSchedule.length} routes, ${stopSchedule.length} stops`);
+}
+
+/* ── SEARCH & FILTER ── */
+function filterRouteTable() {
+  const q = document.getElementById('routeSearch').value.toLowerCase();
+  const rows = document.querySelectorAll('#routeBody tr[data-index]');
+  rows.forEach(row => {
+    const routeName = row.dataset.route || '';
+    const textMatch = q === '' || routeName.includes(q);
+    const statusMatch = currentRouteFilter === 'all'
+      || (currentRouteFilter === 'done' && row.classList.contains('marked-row'))
+      || (currentRouteFilter === 'pending' && !row.classList.contains('marked-row'));
+    row.style.display = (textMatch && statusMatch) ? '' : 'none';
+  });
+  UI.updateRouteCount();
+}
+
+function filterStopTable() {
+  const q = document.getElementById('stopSearch').value.toLowerCase();
+  const rows = document.querySelectorAll('#boardingBody tr[data-index]');
+  rows.forEach(row => {
+    const stopName = row.dataset.stop || '';
+    const city = row.dataset.city || '';
+    const textMatch = q === '' || stopName.includes(q) || city.includes(q);
+    const statusMatch = currentStopFilter === 'all'
+      || (currentStopFilter === 'done' && row.classList.contains('marked-row'))
+      || (currentStopFilter === 'pending' && !row.classList.contains('marked-row'));
+    row.style.display = (textMatch && statusMatch) ? '' : 'none';
+  });
+  UI.updateStopCount();
+}
+
+function setRouteFilter(f, el) {
+  currentRouteFilter = f;
+  el.closest('.filter-tabs').querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  filterRouteTable();
+}
+
+function setStopFilter(f, el) {
+  currentStopFilter = f;
+  el.closest('.filter-tabs').querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  filterStopTable();
+}
+
+/* ── EXPORT ACTIONS ── */
+function printSchedule() {
+  const style = document.createElement('style');
+  style.id = '__print_override__';
+  style.textContent = `@page { margin: 10mm 8mm 8mm 8mm !important; }`;
+  document.head.appendChild(style);
+  window.print();
+  setTimeout(() => {
+    const el = document.getElementById('__print_override__');
+    if (el) el.remove();
+  }, 1000);
+}
+
+(function init() {
+  document.getElementById('depDate').valueAsDate = new Date();
+  UI.initDropdown();
+  generateSchedule();
+})();
+</script>
+</body>
+</html>
