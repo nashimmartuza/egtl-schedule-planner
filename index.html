@@ -1084,7 +1084,7 @@ const routeDatabase = {
       { n: "Kallyanpur Bus Point", m: 600, c: "Dhaka" }
     ]
   },
-  "CHP_DHK_NIGHT": {
+  "CHP-DHK": {
     title: "CHAPAI NAWABGANJ → DHAKA",
     routes: [
       { n: "Chapai Nawabganj - Dhaka", b: "1400", s: "1400", dM: 0, aM: 420 },
@@ -1120,7 +1120,7 @@ const routeDatabase = {
       { n: "Jhalmalia Bus Point", m: 135, c: "Natore" }
     ]
   },
-  "CHP_COX_MAIN": {
+  "CHP-COX": {
     title: "CHAPAI NAWABGANJ → COX'S BAZAR",
     routes: [
       { n: "Chapai Nawabganj - Cox's Bazar", b: "2400", s: "2800", dM: 0, aM: 1110 },
@@ -1178,7 +1178,7 @@ const routeDatabase = {
       { n: "ARAMBAGH", m: 515, c: "Dhaka" }
     ]
   },
-  "DEB_COX_MAIN": {
+  "RGP-COX": {
     title: "DEBIGANJ → COX'S BAZAR",
     routes: [
       { n: "Debiganj - Cox's Bazar", b: "-", s: "-", dM: 0, aM: 1095 },
@@ -1235,7 +1235,54 @@ const routeDatabase = {
       { n: "Panthapath Bus Point", m: 550, c: "Dhaka" },
       { n: "Arambag Bus Point", m: 570, c: "Dhaka" }
     ]
-  }
+  },
+"RM-CHP": {
+        title: "RANGAMATI → CHAPAI NAWABGANJ",
+        routes: [
+            { n: "Rangamati - Chapai Nawabganj", b: "0", s: "0", dM: 0, aM: 960 },
+            { n: "Rangamati - Dhaka", b: "0", s: "0", dM: 0, aM: 540 },
+            { n: "Rangamati - Rajshahi", b: "0", s: "0", dM: 0, aM: 900 },
+            { n: "Rangamati - Sirajganj", b: "0", s: "0", dM: 0, aM: 780 },
+            { n: "Rangamati - Natore", b: "0", s: "0", dM: 0, aM: 840 },
+            { n: "Rangamati - Chandra", b: "0", s: "0", dM: 0, aM: 615 },
+            { n: "Raozan - Dhaka", b: "0", s: "0", dM: 90, aM: 540 },
+            { n: "Raozan - Rajshahi", b: "0", s: "0", dM: 90, aM: 900 },
+            { n: "Raozan - Chapai Nawabganj", b: "0", s: "0", dM: 90, aM: 960 },
+            { n: "Raozan - Sirajganj", b: "0", s: "0", dM: 90, aM: 780 },
+            { n: "Raozan - Natore", b: "0", s: "0", dM: 90, aM: 840 },
+            { n: "Raozan - Chandra", b: "0", s: "0", dM: 90, aM: 615 },
+            { n: "Hathazari - Dhaka", b: "0", s: "0", dM: 135, aM: 540 },
+            { n: "Hathazari - Rajshahi", b: "0", s: "0", dM: 135, aM: 900 },
+            { n: "Hathazari - Chapai Nawabganj", b: "0", s: "0", dM: 135, aM: 960 },
+            { n: "Hathazari - Sirajganj", b: "0", s: "0", dM: 135, aM: 780 },
+            { n: "Hathazari - Natore", b: "0", s: "0", dM: 135, aM: 840 },
+            { n: "Hathazari - Chandra", b: "0", s: "0", dM: 135, aM: 615 },
+            { n: "Chittagong - Dhaka", b: "0", s: "0", dM: 210, aM: 540 },
+            { n: "Chittagong - Rajshahi", b: "0", s: "0", dM: 210, aM: 900 },
+            { n: "Chittagong - Chapai Nawabganj", b: "0", s: "0", dM: 210, aM: 960 },
+            { n: "Chittagong - Sirajganj", b: "0", s: "0", dM: 210, aM: 780 },
+            { n: "Chittagong - Natore", b: "0", s: "0", dM: 210, aM: 840 },
+            { n: "Chittagong - Chandra", b: "0", s: "0", dM: 210, aM: 615 },
+            { n: "Dhaka - Rajshahi", b: "0", s: "0", dM: 555, aM: 900 },
+            { n: "Dhaka - Chapai Nawabganj", b: "0", s: "0", dM: 555, aM: 960 },
+            { n: "Dhaka - Natore", b: "0", s: "0", dM: 555, aM: 840 }
+        ],
+        stops: [
+            { n: "Reserve Bazar", m: 0, c: "Rangamati" },
+            { n: "Banarupa", m: 15, c: "Rangamati" },
+            { n: "Vedvedi Bazar", m: 25, c: "Rangamati" },
+            { n: "Manikchhari", m: 30, c: "Rangamati" },
+            { n: "Ghagra", m: 45, c: "Rangamati" },
+            { n: "Ranir Haat", m: 55, c: "Rangamati" },
+            { n: "Betbunia", m: 70, c: "Rangamati" },
+            { n: "Raozan Bus Point", m: 90, c: "Raozan" },
+            { n: "Hathazari Bus Point", m: 135, c: "Hathazari" },
+            { n: "Dampara Bus Point", m: 170, c: "Chittagong" },
+            { n: "AK KHAN", m: 195, c: "Chittagong" },
+            { n: "Arambag Bus Point", m: 555, c: "Dhaka" },
+            { n: "Kallyanpur Bus Point", m: 570, c: "Dhaka" }
+        ]
+    }
 };
 
 const Scheduler = (() => {
