@@ -883,7 +883,7 @@ tr.marked-row .route-name { color: var(--green-deep); }
 
 <script>
 const routeDatabase = {
-  "DHK_COX": {
+  "DHK-COX": {
     title: "DHAKA (ABDULLAHPUR) → COX'S BAZAR",
     routes: [
       { n: "Dhaka - Cox's Bazar", b: "1400", s: "1600", dM: 0, aM: 575 },
@@ -908,7 +908,7 @@ const routeDatabase = {
       { n: "Chittagong Road", m: 30, c: "Dhaka" }
     ]
   },
-  "DHK_GAB_COX": {
+  "DHK-COX": {
     title: "DHAKA (GABTOLI) → COX'S BAZAR",
     routes: [
       { n: "Dhaka - Cox's Bazar", b: "1400", s: "1600", dM: 0, aM: 575 },
@@ -928,7 +928,7 @@ const routeDatabase = {
       { n: "Chittagong Road", m: 30, c: "Dhaka" }
     ]
   },
-  "DHK_CHP_MAIN": {
+  "DHK-CHP": {
     title: "DHAKA → CHAPAI NAWABGANJ",
     routes: [
       { n: "Dhaka - Chapai Nawabganj", b: "1200", s: "1400", dM: 0, aM: 420 },
@@ -944,7 +944,26 @@ const routeDatabase = {
       { n: "Chandra Bus Point", m: 90, c: "Dhaka" }
     ]
   },
-  "COX_DHK": {
+  "DHK-RM": {
+        title: "DHAKA (GABTOLI) → RANGAMATI",
+        routes: [
+            { n: "Dhaka - Rangamati", b: "0", s: "0", dM: 0, aM: 465 },
+            { n: "Dhaka - Raozan", b: "0", s: "0", dM: 0, aM: 405 },
+            { n: "Dhaka - Hathazari", b: "0", s: "0", dM: 0, aM: 375 },
+            { n: "Dhaka - Chittagong", b: "0", s: "0", dM: 0, aM: 345 }
+        ],
+        stops: [
+            { n: "GABTOLI", m: -105, c: "Dhaka" },
+            { n: "KALLYANPUR BRTC", m: -75, c: "Dhaka" },
+            { n: "Panthapath Bus Point", m: -60, c: "Dhaka" },
+            { n: "Fakirapole", m: -30, c: "Dhaka" },
+            { n: "ARAMBAGH", m: 0, c: "Dhaka" },
+            { n: "Sonir Akhra", m: 15, c: "Dhaka" },
+            { n: "Chittagong Road", m: 25, c: "Dhaka" },
+            { n: "Sign Board", m: 30, c: "Dhaka" }
+        ]
+    },
+  "COX-DHK": {
     title: "COX'S BAZAR → DHAKA",
     routes: [
       { n: "Cox's Bazar - Dhaka", b: "1400", s: "1600", dM: 0, aM: 570 },
@@ -974,7 +993,7 @@ const routeDatabase = {
       { n: "Feni Bus Point", m: 385, c: "Feni" }
     ]
   },
-  "COX_CHP_MAIN": {
+  "COX-CHP": {
     title: "COX'S BAZAR → CHAPAI NAWABGANJ",
     routes: [
       { n: "Cox's Bazar - Chapai Nawabganj", b: "2400", s: "2800", dM: 0, aM: 1170 },
@@ -1027,7 +1046,7 @@ const routeDatabase = {
       { n: "Kallyanpur Bus Point", m: 735, c: "Dhaka" }
     ]
   },
-  "COX_DEB_MAIN": {
+  "COX-DEB": {
     title: "COX'S BAZAR → DEBIGANJ",
     routes: [
       { n: "Cox's Bazar - Debiganj", b: "-", s: "-", dM: 0, aM: 1155 },
@@ -1084,12 +1103,62 @@ const routeDatabase = {
       { n: "Kallyanpur Bus Point", m: 600, c: "Dhaka" }
     ]
   },
+  "COX-THK": {
+        title: "COX'S BAZAR → THAKURGAON",
+        routes: [
+            { n: "Cox's Bazar - Dhaka", b: "1400", s: "1600", dM: 0, aM: 600 },
+            { n: "Cox's Bazar - Dinajpur", b: "2300", s: "2800", dM: 0, aM: 1050 },
+            { n: "Cox's Bazar - Birampur", b: "2300", s: "2800", dM: 0, aM: 990 },
+            { n: "Cox's Bazar - Panchagarh", b: "2600", s: "3000", dM: 0, aM: 1140 },
+            { n: "Cox's Bazar - Bogura", b: "2000", s: "2400", dM: 0, aM: 900 },
+            { n: "Cox's Bazar - Thakurgaon", b: "2600", s: "3000", dM: 0, aM: 1140 },
+            { n: "Cox's Bazar - Birgonj", b: "2500", s: "2900", dM: 0, aM: 1095 },
+            { n: "Cox's Bazar - Tangail", b: "1900", s: "2300", dM: 0, aM: 735 },
+            { n: "Cox's Bazar - Chittagong", b: "600", s: "800", dM: 0, aM: 345 },
+            { n: "Cox's Bazar - Sirajganj", b: "1900", s: "2300", dM: 0, aM: 810 },
+            { n: "Cox's Bazar - Chandra", b: "1700", s: "2200", dM: 0, aM: 690 },
+            { n: "Keranihat - Dinajpur", b: "2200", s: "2700", dM: 150, aM: 1050 },
+            { n: "Keranihat - Birampur", b: "2200", s: "2700", dM: 150, aM: 990 },
+            { n: "Keranihat - Bogura", b: "1900", s: "2300", dM: 150, aM: 900 },
+            { n: "Keranihat - Thakurgaon", b: "2500", s: "2900", dM: 150, aM: 1140 },
+            { n: "Keranihat - Birgonj", b: "2500", s: "2900", dM: 150, aM: 1095 },
+            { n: "Chittagong - Dhaka", b: "900", s: "1200", dM: 360, aM: 600 },
+            { n: "Chittagong - Dinajpur", b: "2100", s: "2500", dM: 360, aM: logic = 1050 },
+            { n: "Chittagong - Birampur", b: "2100", s: "2500", dM: 360, aM: 990 },
+            { n: "Chittagong - Bogura", b: "1900", s: "2200", dM: 360, aM: 900 },
+            { n: "Chittagong - Thakurgaon", b: "2200", s: "2600", dM: 360, aM: 1140 },
+            { n: "Chittagong - Birgonj", b: "2200", s: "2600", dM: 360, aM: 1095 },
+            { n: "Chittagong - Tangail", b: "1600", s: "2200", dM: 360, aM: 735 },
+            { n: "Chittagong - Sirajganj", b: "1600", s: "2200", dM: 360, aM: 810 },
+            { n: "Chittagong - Chandra", b: "1500", s: "2100", dM: 360, aM: 690 },
+            { n: "Feni - Dinajpur", b: "2000", s: "2400", dM: 480, aM: 1050 },
+            { n: "Feni - Bogura", b: "1700", s: "2100", dM: 480, aM: 900 },
+            { n: "Feni - Thakurgaon", b: "2100", s: "2500", dM: 480, aM: 1140 },
+            { n: "Feni - Birgonj", b: "2100", s: "2500", dM: 480, aM: 1095 },
+            { n: "Cumilla - Thakurgaon", b: "2100", s: "2500", dM: 510, aM: 1140 }
+        ],
+        stops: [
+            { n: "Cox's Bazar Terminal", m: 0, c: "Cox's Bazar" },
+            { n: "Link Road", m: 10, c: "Cox's Bazar" },
+            { n: "Ramu", m: 25, c: "Cox's Bazar" },
+            { n: "Edgao Bus Point", m: 45, c: "Cox's Bazar" },
+            { n: "Chakaria Bus Stand", m: 90, c: "Cox's Bazar" },
+            { n: "Keranihat Bus Point", m: 150, c: "Keranihat" },
+            { n: "DAMPARA", m: 360, c: "Chittagong" },
+            { n: "AK KHAN", m: 390, c: "Chittagong" },
+            { n: "Vatiari Bus Point", m: 410, c: "Chittagong" },
+            { n: "Sitakunda Bus Point", m: 420, c: "Chittagong" },
+            { n: "kumira Bus Point", m: 435, c: "Chittagong" },
+            { n: "Feni Bus Point", m: 480, c: "Feni" },
+            { n: "Comilla Bus Point", m: 510, c: "Cumilla" }
+        ]
+    },
   "CHP-DHK": {
     title: "CHAPAI NAWABGANJ → DHAKA",
     routes: [
-      { n: "Chapai Nawabganj - Dhaka", b: "1400", s: "1400", dM: 0, aM: 420 },
-      { n: "Rajshahi - Dhaka", b: "1300", s: "1300", dM: 90, aM: 420 },
-      { n: "Natore - Dhaka", b: "1200", s: "1200", dM: 150, aM: 420 }
+      { n: "Chapai Nawabganj - Dhaka", b: "1200", s: "1400", dM: 0, aM: 420 },
+      { n: "Rajshahi - Dhaka", b: "1100", s: "1300", dM: 90, aM: 420 },
+      { n: "Natore - Dhaka", b: "1000", s: "1200", dM: 150, aM: 420 }
     ],
     stops: [
       { n: "Chapai Nawabganj Bus Point", m: 0, c: "Chapai" },
@@ -1179,7 +1248,7 @@ const routeDatabase = {
     ]
   },
   "RGP-COX": {
-    title: "DEBIGANJ → COX'S BAZAR",
+    title: "RANGPUR → COX'S BAZAR",
     routes: [
       { n: "Debiganj - Cox's Bazar", b: "-", s: "-", dM: 0, aM: 1095 },
       { n: "Saidpur - Dhaka", b: "1200", s: "1500", dM: 0, aM: 495 },
@@ -1236,6 +1305,90 @@ const routeDatabase = {
       { n: "Arambag Bus Point", m: 570, c: "Dhaka" }
     ]
   },
+  "THK-COX": {
+        title: "THAKURGAON → COX'S BAZAR",
+        routes: [
+            { n: "Panchagarh - Cox's Bazar", b: "2600", s: "3000", dM: 0, aM: 1140 },
+            { n: "Thakurgaon - Dhaka", b: "1500", s: "1900", dM: 0, aM: 540 },
+            { n: "Thakurgaon - Chittagong", b: "2200", s: "2600", dM: 0, aM: 915 },
+            { n: "Thakurgaon - Cox's Bazar", b: "2600", s: "3000", dM: 0, aM: 1140 },
+            { n: "Thakurgaon - Keranihat", b: "2500", s: "2900", dM: 0, aM: 1035 },
+            { n: "Thakurgaon - Cumilla", b: "2100", s: "2500", dM: 0, aM: 810 },
+            { n: "Birgonj - Dhaka", b: "1500", s: "1900", dM: 45, aM: 540 },
+            { n: "Birgonj - Chittagong", b: "2200", s: "2600", dM: 45, aM: 915 },
+            { n: "Birgonj - Cox's Bazar", b: "2500", s: "2900", dM: 45, aM: 1140 },
+            { n: "Birgonj - Keranihat", b: "2500", s: "2900", dM: 45, aM: 1035 },
+            { n: "Birgonj - Cumilla", b: "2100", s: "2500", dM: 45, aM: 810 },
+            { n: "Dinajpur - Dhaka", b: "1400", s: "1800", dM: 105, aM: 540 },
+            { n: "Dinajpur - Chittagong", b: "2100", s: "2500", dM: 105, aM: 915 },
+            { n: "Dinajpur - Cox's Bazar", b: "2300", s: "2800", dM: 105, aM: 1140 },
+            { n: "Dinajpur - Keranihat", b: "2200", s: "2700", dM: 105, aM: 1035 },
+            { n: "Dinajpur - Cumilla", b: "2000", s: "2400", dM: 105, aM: 810 },
+            { n: "Birampur - Chittagong", b: "2100", s: "2500", dM: 180, aM: 915 },
+            { n: "Birampur - Cox's Bazar", b: "2300", s: "2800", dM: 180, aM: 1140 },
+            { n: "Birampur - Keranihat", b: "2200", s: "2700", dM: 180, aM: 1035 },
+            { n: "Bogura - Dhaka", b: "1000", s: "1300", dM: 300, aM: 540 },
+            { n: "Bogura - Chittagong", b: "1900", s: "2200", dM: 300, aM: 915 },
+            { n: "Bogura - Cox's Bazar", b: "2100", s: "2500", dM: 300, aM: 1140 },
+            { n: "Bogura - Keranihat", b: "2000", s: "2400", dM: 300, aM: 1035 },
+            { n: "Bogura - Cumilla", b: "1700", s: "2100", dM: 300, aM: 810 },
+            { n: "Sirajganj - Chittagong", b: "1600", s: "2200", dM: 330, aM: 915 },
+            { n: "Sirajganj - Cox's Bazar", b: "1900", s: "2300", dM: 330, aM: 1140 },
+            { n: "Dhaka - Chittagong", b: "900", s: "1200", dM: 555, aM: 915 },
+            { n: "Dhaka - Cox's Bazar", b: "1400", s: "1600", dM: 555, aM: 1140 }
+        ],
+        stops: [
+            { n: "Thakurgaon Bus Point", m: 0, c: "Thakurgaon" },
+            { n: "Birgonj Bus Point", m: 45, c: "Birgonj" },
+            { n: "10 Mile Bus Point", m: 65, c: "Birgonj" },
+            { n: "Dinajpur Bus Point", m: 105, c: "Dinajpur" },
+            { n: "Ambari Bus Point", m: 135, c: "Dinajpur" },
+            { n: "Fulbari Bus Point", m: 160, c: "Dinajpur" },
+            { n: "Birampur Bus Point", m: 180, c: "Birampur" },
+            { n: "Baduria Bus Point", m: 200, c: "Birampur" },
+            { n: "Raniganj Bus Point", m: 210, c: "Birampur" },
+            { n: "Ghoraghat Bus Point", m: 225, c: "Birampur" },
+            { n: "Gobindogonj Bus Point", m: 250, c: "Birampur" },
+            { n: "Mokamtola", m: 265, c: "Bogura" },
+            { n: "Mahasthangarh Bus Point", m: 275, c: "Bogura" },
+            { n: "Matidali More Bus Point", m: 280, c: "Bogura" },
+            { n: "Bogura 4 Matha Counter", m: 285, c: "Bogura" },
+            { n: "Thanthania Bus Point", m: 300, c: "Bogura" },
+            { n: "Banani Bus Point", m: 305, c: "Bogura" },
+            { n: "B - Block Bus Point", m: 315, c: "Bogura" },
+            { n: "Sherpur Bus Point", m: 330, c: "Bogura" },
+            { n: "Candaikona Bus Point", m: 350, c: "Bogura" },
+            { n: "Sirajganj Bus Point", m: 405, c: "Sirajganj" },
+            { n: "Kallyanpur Bus Point", m: 555, c: "Dhaka" },
+            { n: "Panthapath Bus Point", m: 565, c: "Dhaka" },
+            { n: "Arambag Bus Point", m: 585, c: "Dhaka" }
+        ]
+    },
+  "RM-DHK": {
+        title: "RANGAMATI → DHAKA",
+        routes: [
+            { n: "Rangamati - Dhaka", b: "0", s: "0", dM: 0, aM: 510 },
+            { n: "Rangamati - Chittagong", b: "0", s: "0", dM: 0, aM: 150 },
+            { n: "Raozan - Dhaka", b: "0", s: "0", dM: 75, aM: 510 },
+            { n: "Hathazari - Dhaka", b: "0", s: "0", dM: 90, aM: 510 },
+            { n: "Chittagong - Dhaka", b: "0", s: "0", dM: 165, aM: 510 }
+        ],
+        stops: [
+            { n: "Reserve Bazar", m: 0, c: "Rangamati" },
+            { n: "Banarupa", m: 15, c: "Rangamati" },
+            { n: "Vedvedi Bazar", m: 25, c: "Rangamati" },
+            { n: "Manikchari", m: 30, c: "Rangamati" },
+            { n: "Ghagra", m: 45, c: "Rangamati" },
+            { n: "Ranir Haat", m: 55, c: "Rangamati" },
+            { n: "Betbunia", m: 60, c: "Rangamati" },
+            { n: "Raozan Bus Point", m: 75, c: "Raozan" },
+            { n: "Hathhazari Bus Point", m: 90, c: "Hathazari" },
+            { n: "DAMPARA", m: 165, c: "Chittagong" },
+            { n: "AK KHAN", m: 195, c: "Chittagong" },
+            { n: "Vatiari Bus Point", m: 225, c: "Chittagong" },
+            { n: "Sitakunda Bus Point", m: 255, c: "Chittagong" }
+        ]
+    },
 "RM-CHP": {
         title: "RANGAMATI → CHAPAI NAWABGANJ",
         routes: [
